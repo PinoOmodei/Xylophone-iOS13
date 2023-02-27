@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
 
@@ -14,8 +15,25 @@ class ViewController: UIViewController {
         super.viewDidLoad()
     }
 
+    var player : AVAudioPlayer?
 
+    @IBAction func keyPressed(_ sender: UIButton) {
+        // print("key \(sender.currentTitle!) has been pressed")
+        playSound(soundName: sender.currentTitle!)
+        
+        // Button flashes using opacity and asyncAfter
+        sender.alpha = 0.3
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            sender.alpha = 1
+        }
+    }
+
+    func playSound(soundName: String) {
+        let url = Bundle.main.url(forResource: soundName, withExtension: "wav")
+        player = try! AVAudioPlayer(contentsOf: url!)
+        player!.play()
+
+    } // End of Play Sound
     
-
 }
 
